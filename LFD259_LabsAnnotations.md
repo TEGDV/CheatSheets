@@ -33,14 +33,17 @@ metadata:
 spec:
   selector:
     type: webserver
-  type: NodePort
+  type: NodePort # assigned by k8s its literally the port of the host machine
     ports:
       - protocol: TCP
-        port: 80
+        port: 5001 # <-- Service port where the service is listening
+        targetPort: 5000 # where the traffic is going to be forwarded inside the container
 ```
 
 **NOTE IMPORTANT!!!**: if you want to expose your GCP VM or AWS EC2 server the right number to apply on your
 firewall rules is the `<ExternalPort>` value that could be listed using `kubectl get service -o wide`
+
+Default NodePort ranges used by services **30000-32767**
 
 ```bash
 NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                 AGE   SELECTOR
